@@ -1,5 +1,6 @@
 package com.silvera.blocklegendbot
 
+import com.android.keyboard.assistant.R
 import android.content.Intent
 import android.media.projection.MediaProjectionManager
 import android.net.Uri
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             when {
                 !isAccessibilityEnabled() -> toast("Önce Erişilebilirlik servisini aç!")
                 !Settings.canDrawOverlays(this) -> requestOverlayPermission()
-                swEsp.isChecked -> requestProjection()   // ESP açıksa önce MediaProjection iste
+                swEsp.isChecked -> requestProjection()
                 else -> launchOverlay(null, -1)
             }
         }
@@ -63,8 +64,6 @@ class MainActivity : AppCompatActivity() {
                               else toast("Ekran paylaşımı reddedildi, ESP devre dışı")
         }
     }
-
-    // ── Helpers ───────────────────────────────────────────────────────
 
     private fun launchOverlay(projData: Intent?, resultCode: Int) {
         val x   = etX.text.toString().toFloatOrNull()        ?: 540f
