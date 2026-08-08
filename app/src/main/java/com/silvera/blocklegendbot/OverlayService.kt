@@ -47,7 +47,6 @@ class OverlayService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        startForegroundNotif()
         wm = getSystemService(WINDOW_SERVICE) as WindowManager
         setupEspView()
         setupFloatingButton()
@@ -62,9 +61,14 @@ class OverlayService : Service() {
         espEnabled = intent.getBooleanExtra(EXTRA_ESP_ON, espEnabled)
 
         if (espEnabled) {
-            val code = intent.getIntExtra(EXTRA_RESULT_CODE, -1)
-            val data = intent.getParcelableExtra<Intent>(EXTRA_RESULT_DATA)
-            if (data != null) startProjection(code, data)
+            try {
+                startForegroundNotif()
+                val code = intent.getIntExtra(EXTRA_RESULT_CODE, -1)
+                val data = intent.getParcelableExtra<Intent>(EXTRA_RESULT_DATA)
+                if (data != null) startProjection(code, data)
+            } catch (e: Exception) {
+                espEnabled = false
+            }
         }
         return START_STICKY
     }
