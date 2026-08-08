@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D0D0D">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Başlık -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BLOCK LEGEND"
+            android:textColor="#1DB954"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.12"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auto-Bot  ·  by Silvera"
+            android:textColor="#444444"
+            android:textSize="12sp"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- ─── CLICKER ─────────────────────────────────── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="CLICKER" android:textColor="#1DB954" android:textSize="11sp"
+            android:letterSpacing="0.15" android:layout_marginBottom="10dp"/>
+
+        <!-- X / Y yan yana -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="12dp">
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Hedef X" android:textColor="#888888" android:textSize="12sp"
+                    android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etX"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="540" android:inputType="numberDecimal" android:text="540"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#222222" android:padding="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Hedef Y" android:textColor="#888888" android:textSize="12sp"
+                    android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etY"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="960" android:inputType="numberDecimal" android:text="960"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#222222" android:padding="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Interval / Burst yan yana -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="24dp">
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Aralık (ms)" android:textColor="#888888" android:textSize="12sp"
+                    android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etInterval"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="100" android:inputType="number" android:text="100"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#222222" android:padding="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Burst (1-5)" android:textColor="#888888" android:textSize="12sp"
+                    android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etBurst"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="3" android:inputType="number" android:text="3"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#222222" android:padding="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ─── ESP ─────────────────────────────────────── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="ESP OVERLAY" android:textColor="#1DB954" android:textSize="11sp"
+            android:letterSpacing="0.15" android:layout_marginBottom="10dp"/>
+
+        <!-- ESP toggle -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:background="#161616" android:padding="14dp"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="ESP Aktif" android:textColor="#DDDDDD" android:textSize="14sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Düşman/Item/Boss renk tespiti" android:textColor="#555555"
+                    android:textSize="11sp" android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <Switch android:id="@+id/swEsp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:checked="false"
+                android:thumbTint="#1DB954"
+                android:trackTint="#333333"/>
+        </LinearLayout>
+
+        <!-- ESP renk açıklaması -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="28dp"
+            android:gravity="center_vertical">
+
+            <View android:layout_width="12dp" android:layout_height="12dp"
+                android:background="#FF3333" android:layout_marginEnd="6dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="ENEMY" android:textColor="#888888" android:textSize="11sp"
+                android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="12dp" android:layout_height="12dp"
+                android:background="#FFD700" android:layout_marginEnd="6dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="ITEM" android:textColor="#888888" android:textSize="11sp"
+                android:layout_marginEnd="16dp"/>
+
+            <View android:layout_width="12dp" android:layout_height="12dp"
+                android:background="#AA00FF" android:layout_marginEnd="6dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="BOSS" android:textColor="#888888" android:textSize="11sp"/>
+        </LinearLayout>
+
+        <!-- ─── BUTONLAR ─────────────────────────────────── -->
+        <Button android:id="@+id/btnOpenAccessibility"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:text="⚙  Erişilebilirlik Ayarları"
+            android:backgroundTint="#1A1A1A" android:textColor="#AAAAAA"
+            android:textSize="13sp" android:layout_marginBottom="10dp"/>
+
+        <Button android:id="@+id/btnStart"
+            android:layout_width="match_parent" android:layout_height="54dp"
+            android:text="▶  BAŞLAT"
+            android:backgroundTint="#1DB954" android:textColor="#000000"
+            android:textStyle="bold" android:textSize="16sp"
+            android:letterSpacing="0.08" android:layout_marginBottom="10dp"/>
+
+        <Button android:id="@+id/btnStop"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:text="■  DURDUR"
+            android:backgroundTint="#C62828" android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Durum -->
+        <TextView android:id="@+id/tvStatus"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Durum: —" android:textColor="#555555" android:textSize="13sp"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+</ScrollView>
