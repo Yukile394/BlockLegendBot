@@ -9,9 +9,7 @@
     <application
         android:name=".BotApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlockLegendBot">
 
@@ -24,7 +22,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Accessibility Service: tap simülasyonu -->
         <service
             android:name=".AutoClickService"
             android:exported="true"
@@ -38,7 +35,6 @@
                 android:resource="@xml/accessibility_config" />
         </service>
 
-        <!-- Overlay + ESP servisi -->
         <service
             android:name=".OverlayService"
             android:exported="false"
