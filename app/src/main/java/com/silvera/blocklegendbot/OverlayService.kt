@@ -1,5 +1,6 @@
 package com.silvera.blocklegendbot
 
+import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -12,16 +13,10 @@ import android.os.IBinder
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.MotionEvent
-import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.graphics.Color
 
-/**
- * Ana overlay servisi.
- * Hem floating ▶/■ butonu hem de ESP canvas içerir.
- * MediaProjection intent'i MainActivity'den gelir.
- */
 class OverlayService : Service() {
 
     companion object {
@@ -48,12 +43,11 @@ class OverlayService : Service() {
     private var burst      = 1
     private var espEnabled = false
 
-    // ── Lifecycle ─────────────────────────────────────────────────────
     override fun onBind(i: Intent?): IBinder? = null
 
     override fun onCreate() {
-        startForegroundNotif()
         super.onCreate()
+        startForegroundNotif()
         wm = getSystemService(WINDOW_SERVICE) as WindowManager
         setupEspView()
         setupFloatingButton()
@@ -61,20 +55,17 @@ class OverlayService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent ?: return START_STICKY
-
         targetX    = intent.getFloatExtra(EXTRA_TARGET_X, targetX)
         targetY    = intent.getFloatExtra(EXTRA_TARGET_Y, targetY)
         intervalMs = intent.getLongExtra(EXTRA_INTERVAL_MS, intervalMs)
         burst      = intent.getIntExtra(EXTRA_BURST, burst)
         espEnabled = intent.getBooleanExtra(EXTRA_ESP_ON, espEnabled)
 
-        // MediaProjection başlat (ESP için)
         if (espEnabled) {
             val code = intent.getIntExtra(EXTRA_RESULT_CODE, -1)
             val data = intent.getParcelableExtra<Intent>(EXTRA_RESULT_DATA)
             if (data != null) startProjection(code, data)
         }
-
         return START_STICKY
     }
 
@@ -85,7 +76,15 @@ class OverlayService : Service() {
         super.onDestroy()
     }
 
-    // ── ESP View ──────────────────────────────────────────────────────
+    private fun startForegroundNotif() {
+        val notif = Notification.Builder(this, "bot_channel")
+            .setContentTitle("Block Legend Bot")
+            .setContentText("ESP + Auto-clicker çalışıyor")
+            .setSmallIcon(android.R.drawable.ic_menu_compass)
+            .build()
+        startForeground(1, notif)
+    }
+
     private fun setupEspView() {
         espView = EspOverlayView(this)
         val params = WindowManager.LayoutParams(
@@ -100,7 +99,6 @@ class OverlayService : Service() {
         wm.addView(espView, params)
     }
 
-    // ── Floating button ───────────────────────────────────────────────
     private fun setupFloatingButton() {
         btn = TextView(this).apply {
             text = "▶"
@@ -121,22 +119,21 @@ class OverlayService : Service() {
         var lastX = 0f; var lastY = 0f; var drag = false
         btn.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_DOWN  -> { lastX = event.rawX; lastY = event.rawY; drag = false; true }
-                MotionEvent.ACTION_MOVE  -> {
+                MotionEvent.ACTION_DOWN -> { lastX = event.rawX; lastY = event.rawY; drag = false; true }
+                MotionEvent.ACTION_MOVE -> {
                     val dx = event.rawX - lastX; val dy = event.rawY - lastY
-                    if (dx*dx + dy*dy > 25) drag = true
+                    if (dx * dx + dy * dy > 25) drag = true
                     params.x += dx.toInt(); params.y += dy.toInt()
                     lastX = event.rawX; lastY = event.rawY
                     wm.updateViewLayout(btn, params); true
                 }
-                MotionEvent.ACTION_UP    -> { if (!drag) toggleClicking(); true }
+                MotionEvent.ACTION_UP -> { if (!drag) toggleClicking(); true }
                 else -> false
             }
         }
         wm.addView(btn, params)
     }
 
-    // ── Toggle ────────────────────────────────────────────────────────
     private fun toggleClicking() {
         val svc = AutoClickService.instance ?: return
         if (svc.isRunning) {
@@ -161,7 +158,6 @@ class OverlayService : Service() {
         espView.boxes = emptyList()
     }
 
-    // ── MediaProjection / ESP ─────────────────────────────────────────
     private fun startProjection(resultCode: Int, data: Intent) {
         val mpm = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         mediaProjection = mpm.getMediaProjection(resultCode, data)
@@ -173,9 +169,7 @@ class OverlayService : Service() {
         val H = metrics.heightPixels
         val D = metrics.densityDpi
 
-        espEngine = EspEngine { boxes ->
-            espView.boxes = boxes
-        }
+        espEngine = EspEngine { boxes -> espView.boxes = boxes }
 
         imageReader = ImageReader.newInstance(W, H, android.graphics.PixelFormat.RGBA_8888, 2)
         imageReader!!.setOnImageAvailableListener({ reader ->
@@ -189,14 +183,4 @@ class OverlayService : Service() {
             imageReader!!.surface, null, null
         )
     }
-}
-
-// ── Foreground notification (MediaProjection zorunluluğu) ─────────
-private fun startForegroundNotif() {
-    val notif = android.app.Notification.Builder(this, "bot_channel")
-        .setContentTitle("Block Legend Bot")
-        .setContentText("ESP + Auto-clicker çalışıyor")
-        .setSmallIcon(android.R.drawable.ic_menu_compass)
-        .build()
-    startForeground(1, notif)
 }
