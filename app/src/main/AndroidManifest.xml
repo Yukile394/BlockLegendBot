@@ -7,14 +7,16 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 
     <application
-        android:name=".BotApp"
+        android:name="com.silvera.blocklegendbot.BotApp"
         android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlockLegendBot">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.silvera.blocklegendbot.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +25,7 @@
         </activity>
 
         <service
-            android:name=".AutoClickService"
+            android:name="com.silvera.blocklegendbot.AutoClickService"
             android:exported="true"
             android:label="@string/accessibility_service_label"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
@@ -36,7 +38,7 @@
         </service>
 
         <service
-            android:name=".OverlayService"
+            android:name="com.silvera.blocklegendbot.OverlayService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
 
