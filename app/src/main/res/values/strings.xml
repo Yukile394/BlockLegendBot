@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Block Legend Bot</string>
+    <string name="accessibility_service_label">Block Legend Auto-Clicker</string>
+    <string name="accessibility_service_description">Block Legend oyununda otomatik tıklama yapar. Root gerekmez.</string>
+</resources>
